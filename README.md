@@ -1,6 +1,6 @@
 # Adminpro
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1, Node v18.19.1 and npm 10.2.4.
 
 ## Development server
 
