@@ -1,1 +1,32 @@
-<p>grafica1 works!</p>
+<div class="row">
+  <div class="col-6">
+    <app-dona
+      [title]="titles[0]"
+      [data]="data.dataCharts[0][0]"
+      [colors]="colors.colorsType[0][0]"
+    ></app-dona>
+  </div>
+  <div class="col-6">
+    <app-dona
+      [title]="titles[1]"
+      [data]="data.dataCharts[1][0]"
+      [colors]="colors.colorsType[1][0]"
+    ></app-dona>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <app-dona
+      [title]="titles[2]"
+      [data]="data.dataCharts[2][0]"
+      [colors]="colors.colorsType[2][0]"
+    ></app-dona>
+  </div>
+  <div class="col-6">
+    <app-dona
+      [title]="titles[3]"
+      [data]="data.dataCharts[0][0]"
+      [colors]="colors.colorsType[0][0]"
+    ></app-dona>
+  </div>
+</div>
