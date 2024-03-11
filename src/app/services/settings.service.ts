@@ -8,7 +8,6 @@ export class SettingsService {
   themeDefault: string = './assets/css/colors/default-dark.css';
 
   constructor() {
-    console.log('SettingsService constructor');
     let urlStorage = localStorage.getItem('theme') || this.themeDefault;
     this.linkTheme?.setAttribute('href', urlStorage);
   }

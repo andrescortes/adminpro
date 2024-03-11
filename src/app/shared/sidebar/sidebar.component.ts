@@ -9,11 +9,10 @@ import { SidebarService } from '../../services/sidebar.service';
 export class SidebarComponent {
 
   menuItems: any[] = [];
+
   constructor(
     private readonly sidebarService: SidebarService,
-  ) { 
+  ) {
     this.menuItems = this.sidebarService.menuItems;
-    console.log(this.menuItems);
-    
   }
 }

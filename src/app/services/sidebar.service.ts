@@ -9,15 +9,14 @@ export class SidebarService {
       title: 'Dashboard',
       icon: 'mdi mdi-gauge',
       subMenu: [
-        { title: 'Main', url: '/' },
+        { title: 'Principal', url: '/dashboard' },
         { title: 'Progress', url: 'progress' },
+        { title: 'Promises', url: 'promises' },
         { title: 'Graph1', url: 'graph1' },
+        { title: 'RxJs', url: 'rxjs' },
       ]
     },
   ];
 
-  constructor() {
-    console.log('SidebarService constructor');
-
-  }
+  constructor() { }
 }
