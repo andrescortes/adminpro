@@ -8,11 +8,15 @@ import { PagesComponent } from './pages.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { authGuard } from '../guards';
 
 export const routes: Routes = [
     {
         path: 'dashboard',
         component: PagesComponent,
+        canActivate: [
+            authGuard
+        ],
         children: [
             { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
             { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },

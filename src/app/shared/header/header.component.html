@@ -101,9 +101,7 @@
               <span class="heartbit"></span> <span class="point"></span>
             </div>
           </a>
-          <div
-            class="dropdown-menu dropdown-menu-right mailbox fast fadeIn"
-          >
+          <div class="dropdown-menu dropdown-menu-right mailbox fast fadeIn">
             <ul>
               <li>
                 <div class="drop-title">Notifications</div>
@@ -352,11 +350,13 @@
               </li>
               <li role="separator" class="divider"></li>
               <li>
-                <a routerLink="account-settings"><i class="ti-settings"></i> Account Setting</a>
+                <a routerLink="account-settings"
+                  ><i class="ti-settings"></i> Account Setting</a
+                >
               </li>
               <li role="separator" class="divider"></li>
-              <li>
-                <a routerLink="/login"><i class="fa fa-power-off"></i> Logout</a>
+              <li class="a-cursor">
+                <a (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
               </li>
             </ul>
           </div>
