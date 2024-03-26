@@ -8,10 +8,12 @@ export interface LoginResponse {
 }
 
 export interface User {
-    name: string,
-    email: string,
-    role: string,
-    status: boolean,
-    google: boolean,
-    uid: string,
+    name: string;
+    email: string;
+    password?: string;
+    img?: string;
+    role?: string;
+    status?: boolean;
+    google?: boolean;
+    uid?: string;
 }

@@ -61,13 +61,6 @@ export class DonaComponent implements OnChanges {
   public doughnutChartType: ChartType = 'doughnut';
   public doughnutChartOptions: ChartOptions = {
     responsive: true,
-    // onHover(event: ChartEvent, elements: ActiveElement[], chart: Chart): void {
-    //   console.log({
-    //     event,
-    //     elements,
-    //     chart
-    //   });
-    // },
     onClick(event: ChartEvent, elements: ActiveElement[], chart: Chart): void {
       console.log({
         event,

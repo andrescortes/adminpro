@@ -4,6 +4,7 @@ import { LoginForm, LoginResponse, RegisterForm } from '../interfaces';
 import { environment } from '../../environments/environment';
 import { Observable, catchError, defer, from, map, of, tap, throwError } from 'rxjs';
 import { ToasterService } from './toaster.service';
+import { User } from '../models/user.model';
 
 declare const google: any;
 
@@ -12,64 +13,66 @@ declare const google: any;
 })
 export class UserService {
   private readonly url = environment.base_url;
+  private _user!: User;
 
   constructor(
     private readonly httpClient: HttpClient,
     private readonly toasterService: ToasterService,
-  ) {
+  ) { }
+
+  public get user(): User {
+    return this._user;
+  }
+
+  private updateUserProperties({ user }: LoginResponse): void {
+    if (!user) return;
+    this._user = new User(user.name, user.email).bind(user);
   }
 
   createUser(form: RegisterForm): Observable<LoginResponse> {
     return this.httpClient.post<LoginResponse>(`${this.url}/users`, form)
       .pipe(
-        tap((resp: LoginResponse) => {
-          if (resp.token && resp.user && resp.user.email) {
-            localStorage.setItem('token', resp.token);
-            localStorage.setItem('email', resp.user.email);
-          }
-        })
+        tap(this.updateToken.bind(this))
+      );
+  }
+
+  updateUser(userId: string, name: string, email: string, role: string): Observable<LoginResponse> {
+    return this.httpClient.put<LoginResponse>(`${this.url}/users/${userId}`, { name, email, role }, {
+      headers: {
+        'x-token': this.token
+      }
+    })
+      .pipe(
+        tap(this.updateToken.bind(this)),
+        tap(this.updateUserProperties.bind(this))
       );
   }
 
   loginUser(form: LoginForm): Observable<LoginResponse> {
     return this.httpClient.post<LoginResponse>(`${this.url}/login`, form)
       .pipe(
-        tap((resp: LoginResponse) => {
-          if (resp.token && resp.user && resp.user.email) {
-            localStorage.setItem('token', resp.token);
-            localStorage.setItem('email', resp.user.email);
-          }
-        })
+        tap(this.updateToken.bind(this))
       );
   }
 
   loginGoogle(token: string): Observable<LoginResponse> {
     return this.httpClient.post<LoginResponse>(`${this.url}/login/google`, { token })
       .pipe(
-        tap((resp: LoginResponse) => {
-          if (resp.token && resp.user && resp.user.email) {
-            localStorage.setItem('token', resp.token);
-            localStorage.setItem('email', resp.user.email);
-          }
-        })
+        tap(this.updateToken.bind(this))
       );
   }
 
   validateToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
     return this.httpClient.get<LoginResponse>(`${this.url}/login/refresh`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     })
       .pipe(
-        tap((resp: LoginResponse) => {
-          if (resp.token && resp.user && resp.user.email) {
-            localStorage.setItem('token', resp.token);
-            localStorage.setItem('email', resp.user.email);
-          }
+        map((resp: LoginResponse) => {
+          this.updateUserProperties(resp);
+          return true;
         }),
-        map(() => true),
         catchError(() => of(false))
       );
   }
@@ -99,8 +102,7 @@ export class UserService {
           localStorage.removeItem('email');
           const googleNoIdentity = 'opt_out_or_no_session';
           if (err === googleNoIdentity) {
-            const errorCustom = new Error('failed');
-            return throwError(() => errorCustom);
+            return throwError(() => new Error('failed'));
           }
           return throwError(() => new Error(err));
         })
@@ -117,7 +119,17 @@ export class UserService {
           this.toasterService.logoutSuccess(email.toUpperCase());
         }
       });
+  }
 
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  private updateToken(response: LoginResponse): void {
+    if (response.token && response.user && response.user.email) {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('email', response.user.email);
+    }
   }
 
 }

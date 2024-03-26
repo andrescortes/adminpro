@@ -26,7 +26,7 @@ export class RxjsComponent implements OnDestroy {
     //   });
 
     // this.testObservable2();
-    this.intervalSubscription = this.interval().subscribe(console.log);
+    // this.intervalSubscription = this.interval().subscribe(console.log);
   }
   ngOnDestroy(): void {
     this.intervalSubscription.unsubscribe();
@@ -55,7 +55,6 @@ export class RxjsComponent implements OnDestroy {
           clearInterval(interval);
           subscriber.error('i llego al valor de 2');
         }
-        console.log('intervale alive',);
       }, 1000);
     });
     return interval$;
