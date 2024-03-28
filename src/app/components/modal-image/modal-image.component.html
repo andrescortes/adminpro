@@ -1,0 +1,65 @@
+<div class="modal-bg-image animated fadeIn fast" [class.hide-modal]="hideModal">
+  <div
+    id="responsive-modal"
+    class="modal fade show"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    style="display: block; padding-right: 17px"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Load image</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-hidden="true"
+            (click)="closeModal()"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Choose an image</h3>
+          <div class="text-center">
+            <img
+              [src]="imgPreview"
+              alt="user"
+              class="img-circle img-responsive image-avatar"
+            />
+            <br />
+            <br />
+            <div class="col-12 col-md-6">
+              <input
+                type="file"
+                class="form-control-file"
+                (change)="onFileChange($event)"
+                accept=".jpg, .jpeg, .png"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default waves-effect"
+            data-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger waves-effect waves-light"
+            (click)="onUpload()"
+            [disabled]="!imgUpload"
+          >
+            Upload image
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

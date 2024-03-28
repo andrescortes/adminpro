@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginForm, LoginResponse, RegisterForm } from '../interfaces';
+import { IUserPage, IUserPaginated, LoginForm, LoginResponse, RegisterForm } from '../interfaces';
 import { environment } from '../../environments/environment';
 import { Observable, catchError, defer, from, map, of, tap, throwError } from 'rxjs';
 import { ToasterService } from './toaster.service';
@@ -37,14 +37,22 @@ export class UserService {
   }
 
   updateUser(userId: string, name: string, email: string, role: string): Observable<LoginResponse> {
-    return this.httpClient.put<LoginResponse>(`${this.url}/users/${userId}`, { name, email, role }, {
-      headers: {
-        'x-token': this.token
-      }
-    })
+    return this.httpClient.put<LoginResponse>(`${this.url}/users/${userId}`, { name, email, role }, this.headers)
       .pipe(
         tap(this.updateToken.bind(this)),
         tap(this.updateUserProperties.bind(this))
+      );
+  }
+
+  updateRoleUser(userId: string, name: string, email: string, role: string): Observable<LoginResponse> {
+    return this.httpClient.put<LoginResponse>(`${this.url}/users/${userId}`, { name, email, role }, this.headers);
+  }
+
+  deleteUser(uid: string): Observable<boolean> {
+    return this.httpClient.delete<void>(`${this.url}/users/${uid}`, this.headers)
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
       );
   }
 
@@ -63,11 +71,7 @@ export class UserService {
   }
 
   validateToken(): Observable<boolean> {
-    return this.httpClient.get<LoginResponse>(`${this.url}/login/refresh`, {
-      headers: {
-        'x-token': this.token
-      }
-    })
+    return this.httpClient.get<LoginResponse>(`${this.url}/login/refresh`, this.headers)
       .pipe(
         map((resp: LoginResponse) => {
           this.updateUserProperties(resp);
@@ -79,8 +83,7 @@ export class UserService {
 
   logout(): void {
     google.accounts.id.disableAutoSelect();
-    const email = localStorage.getItem('email') ?? 'User';
-
+    const email = localStorage.getItem('email') || '';
     const response = new Promise((resolve, reject) => {
       google.accounts.id.revoke(email, (done: any) => {
         if (done.error) {
@@ -93,17 +96,13 @@ export class UserService {
 
     defer(() => from(response)
       .pipe(
-        tap(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('email');
-        }),
         catchError((err) => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('email');
           const googleNoIdentity = 'opt_out_or_no_session';
           if (err === googleNoIdentity) {
             return throwError(() => new Error('failed'));
           }
+          localStorage.removeItem('token');
+          localStorage.removeItem('email');
           return throwError(() => new Error(err));
         })
       ))
@@ -121,6 +120,40 @@ export class UserService {
       });
   }
 
+  loadUsers(from = 0, limit = 5, time: number = 0): Observable<IUserPaginated> {
+    return new Observable((observer) => {
+      setTimeout(() => {
+        this.httpClient.get<IUserPage>(`${this.url}/users?from=${from}&limit=${limit}`, this.headers)
+          .pipe(
+            map(({ users, total, ok }): IUserPaginated => {
+              let userMapped = users.map((user) => new User(user.name, user.email).bind(user));
+              return {
+                ok,
+                total,
+                users: userMapped
+              }
+            })
+          )
+          .subscribe({
+            next: (resp) => {
+              observer.next(resp);
+              observer.complete();
+            },
+            error: (err) => {
+              observer.error(err);
+            }
+          });
+      }, time);
+    })
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
+  }
   get token(): string {
     return localStorage.getItem('token') || '';
   }
@@ -128,7 +161,7 @@ export class UserService {
   private updateToken(response: LoginResponse): void {
     if (response.token && response.user && response.user.email) {
       localStorage.setItem('token', response.token);
-      localStorage.setItem('email', response.user.email);
+      localStorage.setItem('email', response.user?.email);
     }
   }
 

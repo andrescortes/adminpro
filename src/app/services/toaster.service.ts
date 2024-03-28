@@ -117,13 +117,43 @@ export class ToasterService {
     });
   }
 
-  questionWithConfirmAndClose(title: string, text: string): Promise<SweetAlertResult<any>> {
-    return Swal.fire({
-      icon: 'question',
-      title: title,
-      text: text,
-      showConfirmButton: true,
-      allowOutsideClick: false
+  async questionWithConfirmAndClose(title: string, text: string, role: string): Promise<boolean> {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+
+    return swalWithBootstrapButtons.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+         swalWithBootstrapButtons.fire({
+          title: title,
+          text: text,
+          icon: "success"
+        });
+        return true;
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+        
+      ) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: `${role} not deleted`,
+          icon: "error"
+        });
+        return false;
+      }
+      return false;
     });
   }
 }

@@ -6,7 +6,6 @@ import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginForm, LoginResponse } from '../../interfaces';
 import { environment } from '../../../environments/environment';
-import { interval } from 'rxjs';
 
 declare const google: any;
 
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginForm!: FormGroup;
   formSubmitted = false;
   @ViewChild('googleBtn') googleBtn!: ElementRef;
-  timeOut: any;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -30,11 +28,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ) {
     this.loginForm = this.createForm();
   }
-  
+
   ngOnInit(): void {
-    this.timeOut = setTimeout(() => {
-      this.loadRemember();
-    }, 1000);
+    this.loadRemember();
   }
 
   ngAfterViewInit(): void {
@@ -57,7 +53,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
           text: 'signin_with',
         }
       );
-      clearTimeout(this.timeOut);
       resolve(void 0);
     });
   }

@@ -21,3 +21,34 @@
   width: 200px;
   height: 200px;
 }
+
+.image-avatar-table {
+  width: 30px;
+  height: 30px;
+}
+
+.w100 {
+  width: 100px;
+}
+
+.w140 {
+  width: 140px;
+}
+
+.table-solid {
+  border: 1px solid #d1c2c2;
+}
+
+.modal-bg-image {
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.hide-modal{
+  display: none;
+}
