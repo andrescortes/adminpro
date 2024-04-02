@@ -1,0 +1,117 @@
+<div *ngIf="isLoading" class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">Loading</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Please wait</p>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card bg-secondary text-white p-3">
+      <div class="card-body">
+        <h4 class="card-title text-white p-3">{{isNew ? 'Create' : 'Update'}} Doctor</h4>
+        <h6 class="card-subtitle text-white p-3">
+          Enter the information of the doctor
+        </h6>
+        <form
+          [formGroup]="doctorForm"
+          (ngSubmit)="onSubmit()"
+          class="form-horizontal p-t-20"
+        >
+          <div *ngIf="doctorToUpdate" class="form-group row text-center">
+            <label for="exampleInputuname3" class="col-sm-12 control-label"
+              >Avatar</label
+            >
+
+            <div class="col-sm-12 p-3">
+              <img
+                [src]="doctorToUpdate.img | image : 'doctors'"
+                class="rounded-circle img-thumbnail image-avatar a-cursor"
+                alt="doctor"
+                (click)="openModal()"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="exampleInputuname3" class="col-sm-3 control-label"
+              >Name</label
+            >
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="ti-user"></i></div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputuname3"
+                  placeholder="Enter Name"
+                  formControlName="name"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="exampleInputEmail3" class="col-sm-3 control-label"
+              >Hospital</label
+            >
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="ti-truck"></i></div>
+                <select
+                  name="hospitals"
+                  class="form-control"
+                  formControlName="hospital"
+                >
+                  <option value="">-- Select --</option>
+                  <option
+                    *ngFor="let hospital of hospitals"
+                    [ngValue]="hospital.uid"
+                  >
+                    {{ hospital.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row m-b-0">
+            <div class="offset-sm-3 col-sm-9">
+              <button
+                type="submit"
+                class="btn btn-success waves-effect waves-light"
+                [disabled]="!doctorForm.valid"
+              >
+                <i class="fa fa-save"></i>
+                {{ isNew ? 'Create' : 'Update' }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="hospital" class="col-md-6 animated fadeIn">
+    <div class="card bg-secondary text-white p-3">
+      <div class="card-body">
+        <h4 class="card-title text-white p-3">Hospital</h4>
+        <h6 class="card-subtitle text-white p-3">
+          Preview image of the hospital
+        </h6>
+        <div class="form-group row text-center">
+          <label for="exampleInputuname3" class="col-sm-12 control-label"
+            >Avatar</label
+          >
+
+          <div class="col-sm-12 p-3">
+            <img
+              [src]="hospital.img || '' | image : 'hospitals'"
+              class="rounded-circle img-thumbnail image-avatar"
+              [alt]="hospital.name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

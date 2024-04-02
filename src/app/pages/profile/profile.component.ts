@@ -104,7 +104,6 @@ export class ProfileComponent implements OnInit {
         this.toasterService.success('File uploaded', 'Success');
       })
       .catch((err: any) => {
-        console.error({ err });
         this.imgUpload = null!;
         this.imgPreview = null!;
         this.toasterService.error(err?.message, 'Error');

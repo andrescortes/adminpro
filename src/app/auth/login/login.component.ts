@@ -7,8 +7,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoginForm, LoginResponse } from '../../interfaces';
 import { environment } from '../../../environments/environment';
 
-declare const google: any;
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,24 +35,24 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.googleInit();
   }
 
-  async googleInit(): Promise<void> {
-    return new Promise((resolve) => {
-      google.accounts.id.initialize({
-        client_id: environment.google_client_id,
-        callback: (response: any) => this.handleCredentialResponse(response),
-      });
-      google.accounts.id.renderButton(
-        this.googleBtn.nativeElement,
-        {
-          theme: 'filled_blue',
-          size: 'large',
-          type: 'standard',
-          shape: 'pill',
-          text: 'signin_with',
-        }
-      );
-      resolve(void 0);
+  googleInit() {
+    google.accounts.id.initialize({
+      client_id: environment.google_client_id,
+      callback: (res: any) => this.handleCredentialResponse(res),
+      cancel_on_tap_outside: true,
+      context: 'signin',
     });
+    google.accounts.id.renderButton(
+      this.googleBtn.nativeElement,
+      {
+        type: 'standard',
+        shape: 'pill',
+        theme: 'filled_blue',
+        text: 'signin_with',
+        size: 'large',
+        logo_alignment: 'left'
+      }
+    );
   }
 
   handleCredentialResponse(resp: any): void {

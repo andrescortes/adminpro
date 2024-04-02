@@ -52,3 +52,8 @@
 .hide-modal{
   display: none;
 }
+
+.modern-background {
+  background: linear-gradient(to right, #fd746c, #ff9068); /* Cambia los colores según tus preferencias */
+  height: 100vh; /* Ajusta la altura según tus necesidades */
+}

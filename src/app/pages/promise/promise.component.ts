@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class PromiseComponent implements OnInit {
 
   ngOnInit(): void {
-    this.getUsers().then(users => console.log({ users }));
+    this.getUsers().then(users => console.table({ users }));
   }
 
   getUsers(): Promise<unknown> {

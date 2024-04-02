@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +27,6 @@ export class FileUploadService {
         return res;
       }
     } catch (error) {
-      console.log(error);
       throw new Error("Something went wrong");
     }
 

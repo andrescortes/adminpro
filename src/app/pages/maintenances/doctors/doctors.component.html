@@ -1,1 +1,94 @@
-<p>doctors works!</p>
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <input
+        type="text"
+        class="form-control"
+        name="Search-doctor"
+        placeholder="Search a doctor"
+        #txtSearch
+      />
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading" class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">Loading</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Please wait</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isLoading" class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8">
+            <h4 class="card-title">
+              Doctors: (<strong>{{ doctors.length }}</strong
+              >)
+            </h4>
+            <h6 class="card-subtitle">See all the doctors</h6>
+          </div>
+          <div class="col-4 text-right">
+            <a
+              type="button"
+              class="btn btn-primary"
+              [routerLink]="['/dashboard/doctor', 'new']"
+            >
+              <i class="fa fa-plus-square"></i>
+              Create Doctor
+            </a>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table full-color-table full-purple-table hover-table">
+            <thead>
+              <tr>
+                <th class="w100">Avatar</th>
+                <th>Name</th>
+                <th class="text-nowrap w100">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doctor of doctors">
+                <td>
+                  <img
+                    class="rounded-circle img-thumbnail image-avatar-table a-cursor"
+                    [src]="doctor.img | image : 'doctors'"
+                    [alt]="doctor.name"
+                    (click)="openModal(doctor)"
+                  />
+                </td>
+                <td>
+                  <p>{{ doctor.name }}</p>
+                </td>
+                <td class="text-nowrap text-center">
+                  <a
+                    [routerLink]="['/dashboard/doctor', doctor.uid]"
+                    data-toggle="tooltip"
+                    data-original-title="Edit"
+                    class="a-cursor"
+                  >
+                    <i class="fa fa-edit text-inverse m-r-10"></i>
+                  </a>
+                  <a
+                    (click)="deleteDoctor(doctor.uid)"
+                    data-toggle="tooltip"
+                    data-original-title="Close"
+                    class="a-cursor"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

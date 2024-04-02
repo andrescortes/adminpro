@@ -85,8 +85,10 @@ export class UsersComponent implements OnDestroy {
             return from([ false ]);
           }
         })
-      ).subscribe(() => {
-        this.loadUsers();
+      ).subscribe((res) => {
+        if (res) {
+          this.loadUsers();
+        }
       });
   }
 

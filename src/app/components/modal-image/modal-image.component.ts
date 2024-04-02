@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { FileUploadService, ModalImageService, ToasterService, UserService } from '../../services';
-import { User } from '../../models';
+import {
+  FileUploadService,
+  ModalImageService,
+  ToasterService
+} from '../../services';
 
 @Component({
   selector: 'app-modal-image',

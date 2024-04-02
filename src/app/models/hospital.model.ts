@@ -4,6 +4,7 @@ import { User } from "./user.model";
 const base_url = environment.base_url;
 export class Hospital {
     constructor(
+        public _id: string,
         public name: string,
         public user: User,
         public img?: string,

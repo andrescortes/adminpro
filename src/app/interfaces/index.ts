@@ -8,3 +8,12 @@ export * from './doctor.interface';
 export * from './hospital.interface';
 export * from './data-document.interface';
 export * from './data-model-document.interface';
+export * from './hospitals-api.interface';
+export * from './hospital-api.interface';
+export * from './hospitals-api-search.interface';
+export * from './sweet-alert-result.interface';
+export * from './doctor-api.interface';
+export * from './doctors-api.interface';
+export * from './doctors-api-data.interface';
+export * from './hospital-response.interface';
+

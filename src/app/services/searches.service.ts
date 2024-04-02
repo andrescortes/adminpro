@@ -37,12 +37,12 @@ export class SearchesService {
 
             if (item instanceof Hospital) {
               const user = new User(item.user.name, item.user.email).bind(item.user);
-              return new Hospital(item.name, user).bind(item);
+              return new Hospital(item._id, item.name, user).bind(item);
             }
 
             if (item instanceof Doctor) {
               const user = new User(item.user.name, item.user.email).bind(item.user);
-              const hospital = new Hospital(item.hospital.name, user).bind(item.hospital);
+              const hospital = new Hospital(item.hospital._id, item.hospital.name, user).bind(item.hospital);
               return new Doctor(item.name, user, hospital).bind(item);
             }
 

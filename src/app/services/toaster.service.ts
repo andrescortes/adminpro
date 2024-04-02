@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { ISweetAlertResult } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -136,7 +137,7 @@ export class ToasterService {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-         swalWithBootstrapButtons.fire({
+        swalWithBootstrapButtons.fire({
           title: title,
           text: text,
           icon: "success"
@@ -144,7 +145,7 @@ export class ToasterService {
         return true;
       } else if (
         result.dismiss === Swal.DismissReason.cancel
-        
+
       ) {
         swalWithBootstrapButtons.fire({
           title: "Cancelled",
@@ -154,6 +155,17 @@ export class ToasterService {
         return false;
       }
       return false;
+    });
+  }
+
+  async modalWithValue(title: string, inputLabel: string, inputPlaceholder: string): Promise<SweetAlertResult<any>> {
+    return Swal.fire({
+      title: title,
+      input: 'text',
+      inputLabel,
+      inputPlaceholder,
+      confirmButtonText: 'Save',
+      confirmButtonColor: '#3085d6',
     });
   }
 }

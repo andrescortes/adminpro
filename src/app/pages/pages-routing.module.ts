@@ -2,17 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { authGuard } from '../guards';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DoctorComponent } from './maintenances/doctors/doctor/doctor.component';
+import { DoctorsComponent } from './maintenances/doctors/doctors.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
+import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
 import { PagesComponent } from './pages.component';
+import { ProfileComponent } from './profile/profile.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
-import { authGuard } from '../guards';
-import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './maintenances/users/users.component';
-import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
-import { DoctorsComponent } from './maintenances/doctors/doctors.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,7 @@ export const routes: Routes = [
             { path: 'users', component: UsersComponent, data: { title: 'App Users' } },
             { path: 'hospitals', component: HospitalsComponent, data: { title: 'Hospitals' } },
             { path: 'doctors', component: DoctorsComponent, data: { title: 'Doctors' } },
+            { path: 'doctor/:id', component: DoctorComponent, data: { title: 'Doctors' } },
         ]
     },
 ]
