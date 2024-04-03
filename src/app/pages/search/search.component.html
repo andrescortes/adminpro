@@ -1,0 +1,99 @@
+<div class="row animated fadeIn fast">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Users</h3>
+        <div *ngIf="!isThereUsers" class="alert alert-info">
+          <p class="mb-0">Not users found</p>
+        </div>
+        <div *ngIf="isThereUsers" class="table-responsive">
+          <table class="table full-color-table full-purple-table hover-table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>
+                  <img
+                    [src]="user.img || '' | image : 'users'"
+                    [alt]="user.name"
+                    class="img-circle img-responsive image-avatar-table"
+                  />
+                </td>
+                <td>{{ user.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Doctors</h3>
+        <div *ngIf="!isThereDoctors" class="alert alert-info">
+          <p class="mb-0">Not doctors found</p>
+        </div>
+        <div *ngIf="isThereDoctors" class="table-responsive">
+          <table class="table full-color-table full-purple-table hover-table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doctor of doctors">
+                <td>
+                  <img
+                    [src]="doctor.img || '' | image : 'doctors'"
+                    [alt]="doctor.name"
+                    class="img-circle img-responsive image-avatar-table a-cursor"
+                    (click)="redirectToDoctorPage(doctor.uid)"
+                  />
+                </td>
+                <td>{{ doctor.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Hospitals</h3>
+        <div *ngIf="!isThereHospitals" class="alert alert-info">
+          <p class="mb-0">Not hospitals found</p>
+        </div>
+        <div *ngIf="isThereHospitals" class="table-responsive">
+          <table class="table full-color-table full-purple-table hover-table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let hospital of hospitals">
+                <td>
+                  <img
+                    [src]="hospital.img || '' | image : 'hospitals'"
+                    [alt]="hospital.name"
+                    class="img-circle img-responsive image-avatar-table"
+                  />
+                </td>
+                <td>{{ hospital.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

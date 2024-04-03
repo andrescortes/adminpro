@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
-import { authGuard } from '../guards';
+import { adminGuard, authGuard } from '../guards';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DoctorComponent } from './maintenances/doctors/doctor/doctor.component';
 import { DoctorsComponent } from './maintenances/doctors/doctors.component';
@@ -14,6 +14,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsersComponent } from './maintenances/users/users.component';
+import { SearchComponent } from './search/search.component';
 
 export const routes: Routes = [
     {
@@ -24,17 +25,26 @@ export const routes: Routes = [
         ],
         children: [
             { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
-            { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
-            { path: 'graph1', component: Grafica1Component, data: { title: 'Graph 1' } },
             { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Account Settings' } },
+            { path: 'graph1', component: Grafica1Component, data: { title: 'Graph 1' } },
+            { path: 'profile', component: ProfileComponent, data: { title: 'Profile' } },
+            { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
             { path: 'promises', component: PromiseComponent, data: { title: 'Promises' } },
             { path: 'rxjs', component: RxjsComponent, data: { title: 'RxJs' } },
-            { path: 'profile', component: ProfileComponent, data: { title: 'Profile' } },
+            { path: 'search/:id', component: SearchComponent, data: { title: 'Search' } },
             //maintenances
-            { path: 'users', component: UsersComponent, data: { title: 'App Users' } },
-            { path: 'hospitals', component: HospitalsComponent, data: { title: 'Hospitals' } },
-            { path: 'doctors', component: DoctorsComponent, data: { title: 'Doctors' } },
             { path: 'doctor/:id', component: DoctorComponent, data: { title: 'Doctors' } },
+            { path: 'doctors', component: DoctorsComponent, data: { title: 'Doctors' } },
+            { path: 'hospitals', component: HospitalsComponent, data: { title: 'Hospitals' } },
+            // routes of admins
+            {
+                path: 'users',
+                canActivate: [
+                    adminGuard
+                ],
+                component: UsersComponent,
+                data: { title: 'App Users' }
+            },
         ]
     },
 ]

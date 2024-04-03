@@ -24,6 +24,10 @@ export class UserService {
     return this._user;
   }
 
+  get role(): string {
+    return this.user.role ?? 'USER_ROLE';
+  }
+
   private updateUserProperties({ user }: LoginResponse): void {
     if (!user) return;
     this._user = new User(user.name, user.email).bind(user);
@@ -74,6 +78,7 @@ export class UserService {
     return this.httpClient.get<LoginResponse>(`${this.url}/login/refresh`, this.headers)
       .pipe(
         map((resp: LoginResponse) => {
+          this.updateToken(resp);
           this.updateUserProperties(resp);
           return true;
         }),
@@ -108,9 +113,11 @@ export class UserService {
       ))
       .subscribe({
         next: () => {
+          localStorage.removeItem('menu');
           this.toasterService.logoutSuccess(email.toUpperCase());
         },
         error: (err: any) => {
+          localStorage.removeItem('menu');
           if (err === 'failed') {
             this.toasterService.logoutSuccess(email.toUpperCase());
             return;
@@ -162,6 +169,7 @@ export class UserService {
     if (response.token && response.user && response.user.email) {
       localStorage.setItem('token', response.token);
       localStorage.setItem('email', response.user?.email);
+      localStorage.setItem('menu', JSON.stringify(response.menu));
     }
   }
 

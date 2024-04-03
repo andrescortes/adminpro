@@ -16,4 +16,7 @@ export * from './doctor-api.interface';
 export * from './doctors-api.interface';
 export * from './doctors-api-data.interface';
 export * from './hospital-response.interface';
+export * from './models-response.interface';
+export * from './search-all.interface';
+export * from './menu-item.interface';
 

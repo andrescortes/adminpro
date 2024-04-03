@@ -1,3 +1,4 @@
+import { IMenu } from "./menu-item.interface";
 import { IUser } from "./user.interface";
 
 export interface LoginResponse {
@@ -7,4 +8,5 @@ export interface LoginResponse {
     email?: string;
     token?: string;
     user?: IUser;
+    menu: IMenu[];
 }

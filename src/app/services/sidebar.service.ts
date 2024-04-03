@@ -1,31 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { IMenu } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SidebarService {
-  menuItems: any[] = [
-    {
-      title: 'Dashboard',
-      icon: 'mdi mdi-gauge',
-      subMenu: [
-        { title: 'Principal', url: '/dashboard' },
-        { title: 'Progress', url: 'progress' },
-        { title: 'Promises', url: 'promises' },
-        { title: 'Graph1', url: 'graph1' },
-        { title: 'RxJs', url: 'rxjs' },
-      ]
-    },
-    {
-      title: 'Maintenances',
-      icon: 'mdi mdi-folder-lock-open',
-      subMenu: [
-        { title: 'Users', url: 'users' },
-        { title: 'Hospitals', url: 'hospitals' },
-        { title: 'Doctors', url: 'doctors' },
-      ]
-    }
-  ];
+export class SidebarService implements OnInit {
+  menuItems!: IMenu[];
 
   constructor() { }
+
+  ngOnInit(): void {
+    this.loadMenu();
+  }
+
+  loadMenu(): void {
+    const menu = localStorage.getItem('menu');
+    if (menu) {
+      this.menuItems = JSON.parse(menu);
+    }
+  }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { IDataDocumentModel } from '../interfaces/data-model-document.interface';
-import { IDataDocument } from '../interfaces';
+import { IDataDocument, ISearchAll } from '../interfaces';
 import { Observable, map } from 'rxjs';
 import { Doctor, Hospital, User } from '../models';
 
@@ -65,5 +65,9 @@ export class SearchesService {
           };
         })
       );
+  }
+
+  findByTerm(term: string): Observable<ISearchAll> {
+    return this.httpClient.get<ISearchAll>(`${this.url}/todos/${term}`, this.headers)
   }
 }

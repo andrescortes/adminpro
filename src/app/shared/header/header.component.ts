@@ -9,7 +9,6 @@ import { User } from '../../models/user.model';
   styles: ``
 })
 export class HeaderComponent {
-
   user!: User;
 
   constructor(
@@ -25,6 +24,14 @@ export class HeaderComponent {
   logout() {
     this._userService.logout();
     this._router.navigateByUrl('/login');
+  }
+
+  onSubmit(termToSearch: string) {
+    if (termToSearch.length === 0) {
+      this._router.navigate([ 'dashboard' ]);
+    } else {
+      this._router.navigate([ 'dashboard/search', termToSearch ]);
+    }
   }
 
 }

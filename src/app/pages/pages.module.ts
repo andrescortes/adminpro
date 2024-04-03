@@ -19,6 +19,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsersComponent } from './maintenances/users/users.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { DoctorComponent } from './maintenances/doctors/doctor/doctor.component';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -36,6 +37,7 @@ import { DoctorComponent } from './maintenances/doctors/doctor/doctor.component'
     RxjsComponent,
     UsersComponent,
     DoctorComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,
