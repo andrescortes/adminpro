@@ -4,6 +4,7 @@
 
 export const environment = {
     production: true,
+    google_client_id: 'test',
     base_url: 'http://localhost:3000/api'
 }
 
